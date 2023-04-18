@@ -1,0 +1,1 @@
+cmd_drivers/net/wireless/rtl8723ds/8723ds.ko := arm-openwrt-linux-muslgnueabi-ld -r  -EL  --build-id  -T ./scripts/module-common.lds -o drivers/net/wireless/rtl8723ds/8723ds.ko drivers/net/wireless/rtl8723ds/8723ds.o drivers/net/wireless/rtl8723ds/8723ds.mod.o;  true
