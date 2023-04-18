@@ -1,0 +1,1 @@
+cmd_drivers/input/touchscreen/focaltech_touch/focaltech_ts.ko := arm-openwrt-linux-muslgnueabi-ld -r  -EL  --build-id  -T ./scripts/module-common.lds -o drivers/input/touchscreen/focaltech_touch/focaltech_ts.ko drivers/input/touchscreen/focaltech_touch/focaltech_ts.o drivers/input/touchscreen/focaltech_touch/focaltech_ts.mod.o;  true
