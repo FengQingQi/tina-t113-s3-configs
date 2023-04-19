@@ -879,8 +879,8 @@ tvd_row*tvd_column is the total tvd channel number to be used in multichannel mo
  */
 &usbc0 {
 	device_type = "usbc0";
-	usb_port_type = <0x0>;
-	usb_detect_type = <0x0>;
+	usb_port_type = <0x2>;
+	usb_detect_type = <0x1>;
 	usb_detect_mode = <0>;
 	usb_id_gpio = <&pio PB 8 GPIO_ACTIVE_HIGH>;
 	enable-active-high;
