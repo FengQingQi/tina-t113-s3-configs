@@ -222,22 +222,6 @@
 		function = "gpio_in";
 	};
 
-	/*gmac_pins_a: gmac@0 {
-		pins = "PE0", "PE1", "PE2", "PE3",
-		       "PE4", "PE5", "PE6", "PE7",
-		       "PE8", "PE9";
-		function = "gmac0";
-		drive-strength = <10>;
-	};
-
-	gmac_pins_b: gmac@1 {
-		pins = "PE0", "PE1", "PE2", "PE3",
-		       "PE4", "PE5", "PE6", "PE7",
-		       "PE8", "PE9";
-		function = "gpio_in";
-	};*/
-
-
 	dmic_pins_a: dmic@0 {
 		/* DMIC_PIN: CLK, DATA0, DATA1, DATA2, DATA3*/
 		pins = "PB12", "PB11", "PB10", "PE14", "PB8";
@@ -368,16 +352,16 @@
 		drive-strength = <10>;
 	};
 
-	ledc_pins_a: ledc@0 {
+	/*ledc_pins_a: ledc@0 {
 		pins = "PG13";
 		function = "ledc";
 		drive-strength = <10>;
-	};
+	};*/
 
-	ledc_pins_b: ledc@1 {
+	/*ledc_pins_b: ledc@1 {
 		pins = "PG13";
 		function = "gpio_in";
-	};
+	};*/
 
 	pwm0_pin_a: pwm0@0 {
 		pins = "PD16";
@@ -453,7 +437,7 @@
 	pinctrl-names = "default", "sleep";
 	pinctrl-0 = <&uart1_pins_a>;
 	pinctrl-1 = <&uart1_pins_b>;
-	status = "disabled";
+	status = "okay";
 };
 
 &uart2 {
@@ -557,8 +541,8 @@
 	btlpm: btlpm@0 {
 		compatible  = "allwinner,sunxi-btlpm";
 		uart_index  = <0x1>;
-		bt_wake     = <&pio PG 15 GPIO_ACTIVE_HIGH>;
-		bt_hostwake = <&pio PG 14 GPIO_ACTIVE_HIGH>;
+		bt_wake     = <&pio PG 14 GPIO_ACTIVE_HIGH>;
+		bt_hostwake = <&pio PG 13 GPIO_ACTIVE_HIGH>;
 		status      = "okay";
 	};
 
@@ -1051,7 +1035,7 @@ tvd_row*tvd_column is the total tvd channel number to be used in multichannel mo
 		status = "disabled";
 	};
 };
-
+/*
 &ledc {
 	pinctrl-names = "default", "sleep";
 	pinctrl-0 = <&ledc_pins_a>;
@@ -1068,7 +1052,7 @@ tvd_row*tvd_column is the total tvd channel number to be used in multichannel mo
 	wait_data_time_ns = <600000>;
 	status	= "okay";
 };
-
+*/
 &keyboard0 {
 	key0 = <210 0x160>;
 	wakeup-source;
@@ -1345,4 +1329,124 @@ pull up or pull down(default 0), driver level(default 1), data>
 	pinctrl-0 = <&ir1_pins_a>;
 	pinctrl-1 = <&ir1_pins_b>;
 	status = "disabled";
+};
+
+&vind0 {
+	csi_top = <378000000>;
+	csi_isp = <327000000>;
+	status = "okay"; /* enable twi and ver1 spi-nand max freq 30M */
+
+	iisp0: isp@5809410 {
+		compatible = "allwinner,sunxi-isp";
+		reg = <0x0 0x05809410 0x0 0x10>;
+		device_id = <0xfe>;
+		status = "disabled";
+	};
+	isp1: isp@5809420 {
+		compatible = "allwinner,sunxi-isp";
+		reg = <0x0 0x05809420 0x0 0x10>;
+		device_id = <0xff>;
+		status = "disabled";
+	};
+
+	actuator0: actuator@5809450 {
+		device_type = "actuator0";
+		actuator0_name = "ad5820_act";
+		actuator0_slave = <0x18>;
+		actuator0_af_pwdn = <>;
+		actuator0_afvdd = "afvcc-csi";
+		actuator0_afvdd_vol = <2800000>;
+		status = "okay";
+	};
+
+	flash0: flash@5809460 {
+		device_type = "flash0";
+		flash0_type = <2>;
+		flash0_en = <>;
+		flash0_mode = <>;
+		flash0_flvdd = "";
+		flash0_flvdd_vol = <>;
+		device_id = <0>;
+		status = "okay";
+	};
+	
+	sensor0: sensor@5809470 {
+		reg = <0x0 0x05809470 0x0 0x10>;
+		device_type = "sensor0";
+		compatible = "allwinner,sunxi-sensor";
+		sensor0_mname = "ov5640";
+		sensor0_twi_cci_id = <2>;
+		sensor0_twi_addr = <0x78>;
+		sensor0_mclk_id = <0>;
+		sensor0_pos = "rear";
+		sensor0_isp_used = <0>;
+		sensor0_fmt = <0>;
+		sensor0_stby_mode = <0>;
+		sensor0_vflip = <0>;
+		sensor0_hflip = <0>;
+		sensor0_iovdd-supply = <>;
+		sensor0_iovdd_vol = <1800000>;
+		sensor0_avdd-supply = <>;
+		sensor0_avdd_vol = <2800000>;
+		sensor0_dvdd-supply = <>;
+		sensor0_dvdd_vol = <1500000>;
+		sensor0_power_en = <>;
+		sensor0_reset = <>;
+		sensor0_pwdn = <>;
+		sensor0_sm_vs = <>;
+		flash_handle = <&flash0>;
+		act_handle = <&actuator0>;
+		device_id = <0>;
+		status  = "okay";
+	};
+
+
+	sensor1:sensor@5809480 {
+		device_type = "sensor1";
+		sensor1_mname = "ov5640";
+		compatible = "allwinner,sunxi-sensor";
+		sensor1_twi_cci_id = <1>;
+		sensor1_twi_addr = <0x6c>;
+		sensor1_mclk_id = <1>;
+		sensor1_pos = "front";
+		sensor1_isp_used = <0>;
+		sensor1_fmt = <0>;
+		sensor1_stby_mode = <0>;
+		sensor1_vflip = <0>;
+		sensor1_hflip = <0>;
+		sensor1_iovdd-supply = <>;
+		sensor1_iovdd_vol = <>;
+		sensor1_avdd-supply = <>;
+		sensor1_avdd_vol = <>;
+		sensor1_dvdd-supply = <>;
+		sensor1_dvdd_vol = <>;
+		sensor1_power_en = <>;
+		sensor1_reset = <&pio PE 7 GPIO_ACTIVE_LOW>;
+		sensor1_pwdn = <&pio PE 6 GPIO_ACTIVE_LOW>;
+		status	= "disabled";
+	};
+
+	vinc0:vinc@5809000 {
+		vinc0_csi_sel = <0>;
+		vinc0_mipi_sel = <0xff>;
+		vinc0_isp_sel = <0>;
+		vinc0_isp_tx_ch = <0>;
+		vinc0_tdm_rx_sel = <0xff>;
+		vinc0_rear_sensor_sel = <0>;
+		vinc0_front_sensor_sel = <0>;
+		vinc0_sensor_list = <0>;
+		status = "okay";
+	};
+/*	vinc1:vinc@5809200 {
+		vinc1_csi_sel = <0>;
+		vinc1_mipi_sel = <0xff>;
+		vinc1_isp_sel = <0xff>;
+		vinc1_isp_tx_ch = <1>;
+		vinc1_tdm_rx_sel = <0xff>;
+		vinc1_rear_sensor_sel = <0>;
+		vinc1_front_sensor_sel = <0>;
+		vinc1_sensor_list = <0>;
+		status = "okay";
+	};
+*/
 };
