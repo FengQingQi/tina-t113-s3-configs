@@ -1336,7 +1336,7 @@ pull up or pull down(default 0), driver level(default 1), data>
 	csi_isp = <327000000>;
 	status = "okay"; /* enable twi and ver1 spi-nand max freq 30M */
 
-	iisp0: isp@5809410 {
+	isp0: isp@5809410 {
 		compatible = "allwinner,sunxi-isp";
 		reg = <0x0 0x05809410 0x0 0x10>;
 		device_id = <0xfe>;
